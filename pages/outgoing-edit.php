@@ -83,8 +83,15 @@ $locationValue = isset($locationLabels[$storedLocationType]) && $storedLocationD
       <button class="secondary-button add-service-button" type="button" data-add-service="edit-delivery-service-rows" hidden>Add another messengerial service</button>
     </div>
     <div class="form-field">
-      <label for="edit-tdoc">T/Doc</label>
-      <input id="edit-tdoc" name="tdoc" type="text" maxlength="200" value="<?= escape_html($outgoingEditingEntry['tdoc']) ?>" required />
+      <label for="edit-tdoc">Type of docs</label>
+      <select id="edit-tdoc" name="tdoc" required>
+        <?php if (!in_array($outgoingEditingEntry['tdoc'], OUTGOING_DOCUMENT_TYPES, true)): ?>
+          <option value="<?= escape_html($outgoingEditingEntry['tdoc']) ?>" selected><?= escape_html($outgoingEditingEntry['tdoc']) ?> (existing value)</option>
+        <?php endif; ?>
+        <?php foreach (OUTGOING_DOCUMENT_TYPES as $documentType): ?>
+          <option value="<?= escape_html($documentType) ?>"<?= $outgoingEditingEntry['tdoc'] === $documentType ? ' selected' : '' ?>><?= escape_html($documentType) ?></option>
+        <?php endforeach; ?>
+      </select>
     </div>
     <div class="form-field">
       <label for="edit-addressee">Addressee</label>

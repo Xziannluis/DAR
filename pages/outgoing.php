@@ -41,7 +41,7 @@ $outgoingViewContent = [
     </div>
     <div class="dashboard-header-actions">
       <button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode" data-theme-toggle>
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4h8l1 4H7l1-4Z" /><path d="M8 8h8v11l-4 2-4-2V8Z" /><path d="M10 12h4" /></svg>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3h6l1.2 4H7.8L9 3Z" fill="currentColor" /><path d="M8 7h8v11l-4 3-4-3V7Z" /><path d="M10 11h4M12 2V1M7 2 5.8 1M17 2l1.2-1" /></svg>
       </button>
       <form method="post">
         <input type="hidden" name="csrf_token" value="<?= escape_html(csrf_token()) ?>" />

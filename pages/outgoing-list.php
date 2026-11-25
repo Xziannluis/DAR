@@ -182,7 +182,7 @@
                 </dd>
               </div>
               <div>
-                <dt>T/Doc</dt>
+                <dt>Type of docs</dt>
                 <dd><?= escape_html($entry['tdoc']) ?></dd>
               </div>
               <div>

@@ -47,8 +47,13 @@
       <button class="secondary-button add-service-button" type="button" data-add-service="delivery-service-rows" hidden>Add another messengerial service</button>
     </div>
     <div class="form-field">
-      <label for="tdoc">T/Doc</label>
-      <input id="tdoc" name="tdoc" type="text" maxlength="200" required />
+      <label for="tdoc">Type of docs</label>
+      <select id="tdoc" name="tdoc" required>
+        <option value="" selected disabled>Choose a document type</option>
+        <?php foreach (OUTGOING_DOCUMENT_TYPES as $documentType): ?>
+          <option value="<?= escape_html($documentType) ?>"><?= escape_html($documentType) ?></option>
+        <?php endforeach; ?>
+      </select>
     </div>
     <div class="form-field">
       <label for="addressee">Addressee</label>
