@@ -5,11 +5,16 @@
       <h1 id="admin-title">Manage accounts</h1>
       <p>Create accounts for outgoing records users.</p>
     </div>
-    <form method="post">
-      <input type="hidden" name="csrf_token" value="<?= escape_html(csrf_token()) ?>" />
-      <input type="hidden" name="action" value="sign-out" />
-      <button class="secondary-button" type="submit">Sign out</button>
-    </form>
+    <div class="dashboard-header-actions">
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode" data-theme-toggle>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4h8l1 4H7l1-4Z" /><path d="M8 8h8v11l-4 2-4-2V8Z" /><path d="M10 12h4" /></svg>
+      </button>
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="<?= escape_html(csrf_token()) ?>" />
+        <input type="hidden" name="action" value="sign-out" />
+        <button class="secondary-button" type="submit">Sign out</button>
+      </form>
+    </div>
   </header>
 
   <form class="account-form" method="post">

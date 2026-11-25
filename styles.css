@@ -44,6 +44,10 @@ body.dashboard-background .page-shell {
   z-index: 1;
 }
 
+body.login-background .page-shell {
+  background: linear-gradient(150deg, #173d3c 0%, #163936 48%, #102e31 100%);
+}
+
 body.login-background::before,
 body.dashboard-background::before {
   position: fixed;
@@ -117,6 +121,12 @@ a {
   background:
     radial-gradient(ellipse at 19% 73%, rgba(62, 137, 113, 0.36), transparent 42%),
     linear-gradient(150deg, #173d3c 0%, #163936 48%, #102e31 100%);
+}
+
+.welcome-panel.workspace-sidebar {
+  background:
+    radial-gradient(ellipse at 19% 73%, rgba(80, 103, 119, 0.28), transparent 42%),
+    linear-gradient(150deg, #243b46 0%, #203641 48%, #192d37 100%);
 }
 
 .brand {
@@ -300,6 +310,61 @@ a {
   place-items: center;
   padding: 42px 54px 50px;
   background: #fff;
+}
+
+body.login-background .welcome-panel,
+body.login-background .login-panel {
+  background: transparent;
+}
+
+body.login-background .decorative-orb {
+  display: none;
+}
+
+body.login-background .login-panel {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: -12px 0 22px -14px rgba(0, 0, 0, 0.75);
+}
+
+body.login-background .welcome-back,
+body.login-background .login-heading h1,
+body.login-background .login-heading p,
+body.login-background .login-content .form-field > label,
+body.login-background .login-bottom > p,
+body.login-background .secure-note,
+body.login-background .login-copyright {
+  color: #fff;
+}
+
+body.login-background .login-heading p,
+body.login-background .login-bottom > p,
+body.login-background .secure-note,
+body.login-background .login-copyright {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+body.login-background .login-content {
+  position: relative;
+  z-index: 1;
+}
+
+.login-orb-one {
+  right: auto;
+  left: -112px;
+}
+
+.login-orb-two {
+  right: auto;
+  left: -80px;
+}
+
+body.login-background .secure-note svg {
+  stroke: rgba(255, 255, 255, 0.78);
+}
+
+body.login-background .text-link,
+body.login-background .text-link:hover {
+  color: #fff;
 }
 
 .login-content {
@@ -516,6 +581,18 @@ a {
   transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 
+.login-content .submit-button {
+  border: 2px solid #fff;
+}
+
+body.login-background .login-content .submit-button {
+  background: #246653;
+}
+
+body.login-background .login-content .submit-button:hover {
+  background: #1f5949;
+}
+
 .submit-button:hover {
   background: var(--green-dark);
   box-shadow: 0 7px 16px rgba(47, 128, 107, 0.22);
@@ -608,6 +685,63 @@ a {
   justify-content: space-between;
   gap: 18px;
   margin-bottom: 24px;
+}
+
+.dashboard-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.theme-toggle {
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid rgba(121, 214, 165, 0.45);
+  outline-offset: 2px;
+}
+
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.login-panel > .theme-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 3;
+}
+
+.dashboard-header-actions .theme-toggle {
+  border-color: #d6e1dc;
+  background: #fff;
+  color: #396b58;
+}
+
+.dashboard-header-actions .theme-toggle:hover {
+  background: #f2f7f4;
 }
 
 .dashboard-header h1 {
@@ -1012,6 +1146,86 @@ a {
   font-size: 10px;
 }
 
+.logbook-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+
+.logbook-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logbook-table-scroll {
+  overflow: auto;
+  border: 1px solid #d9e2de;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.logbook-table {
+  width: 100%;
+  min-width: 1180px;
+  border-collapse: collapse;
+  color: #34474d;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.logbook-table caption {
+  display: none;
+  padding: 12px 14px 20px;
+  background: #fff;
+  color: #263d3c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.logbook-table th,
+.logbook-table td {
+  padding: 11px 12px;
+  border: 1px solid #d9e2de;
+  vertical-align: top;
+  text-align: left;
+}
+
+.logbook-table th {
+  background: #edf3f0;
+  color: #263d3c;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.logbook-table tbody tr:nth-child(even) {
+  background: #fbfcfb;
+}
+
+.logbook-control-number {
+  min-width: 190px;
+}
+
+.logbook-control-number strong,
+.logbook-control-number span {
+  display: block;
+}
+
+.logbook-control-number strong {
+  margin-bottom: 4px;
+  color: #243941;
+  font-weight: 800;
+}
+
+.logbook-control-number span {
+  color: #61716f;
+}
+
 .month-filter {
   display: flex;
   flex-wrap: wrap;
@@ -1332,11 +1546,14 @@ a {
   }
 
   body.login-background .page-shell {
-    background: transparent;
+    background: linear-gradient(150deg, #173d3c 0%, #163936 48%, #102e31 100%);
   }
 
   body.login-background .login-panel {
-    background: rgba(255, 255, 255, 0.35);
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 0;
+    box-shadow: 0 -12px 22px -14px rgba(0, 0, 0, 0.75);
   }
 
   .page-shell-dashboard {
@@ -1500,7 +1717,152 @@ a {
   margin: 14mm;
 }
 
+html[data-theme="dark"] body {
+  color: #e4ece8;
+  background: #101817;
+}
+
+html[data-theme="dark"] body.login-background .page-shell {
+  background: linear-gradient(150deg, #102b29 0%, #102724 48%, #0b1f1e 100%);
+}
+
+html[data-theme="dark"] .page-shell-dashboard {
+  border-color: #33443f;
+  background: #14211f;
+}
+
+html[data-theme="dark"] .page-shell-dashboard .login-panel {
+  color: #e4ece8;
+  background: #14211f;
+}
+
+html[data-theme="dark"] .dashboard-header h1,
+html[data-theme="dark"] .account-form h2,
+html[data-theme="dark"] .list-heading h2 {
+  color: #edf4f1;
+}
+
+html[data-theme="dark"] .dashboard-header p,
+html[data-theme="dark"] .empty-records,
+html[data-theme="dark"] .year-record-count {
+  color: #a5b5af;
+}
+
+html[data-theme="dark"] .account-form,
+html[data-theme="dark"] .month-filter,
+html[data-theme="dark"] .summary-card,
+html[data-theme="dark"] .year-card,
+html[data-theme="dark"] .outgoing-record,
+html[data-theme="dark"] .logbook-table-scroll,
+html[data-theme="dark"] .account-list li,
+html[data-theme="dark"] .edit-attachments {
+  border-color: #354842;
+  background: #1b2a27;
+  color: #e2ebe7;
+}
+
+html[data-theme="dark"] .outgoing-fields label,
+html[data-theme="dark"] .account-fields label,
+html[data-theme="dark"] .month-filter label,
+html[data-theme="dark"] .record-details dt,
+html[data-theme="dark"] .account-list span,
+html[data-theme="dark"] .account-list small {
+  color: #aebdb7;
+}
+
+html[data-theme="dark"] .outgoing-fields input,
+html[data-theme="dark"] .outgoing-fields select,
+html[data-theme="dark"] .outgoing-fields textarea,
+html[data-theme="dark"] .account-form input,
+html[data-theme="dark"] .account-form select,
+html[data-theme="dark"] .month-filter select,
+html[data-theme="dark"] .record-search-input {
+  border-color: #455a53;
+  background-color: #14211f;
+  color: #edf4f1;
+}
+
+html[data-theme="dark"] .outgoing-fields select {
+  background-color: #14211f;
+}
+
+html[data-theme="dark"] .secondary-button,
+html[data-theme="dark"] .record-action-edit,
+html[data-theme="dark"] .record-action-print,
+html[data-theme="dark"] .year-list-back {
+  border-color: #486057;
+  background-color: #1a2b26;
+  color: #b9e5d1;
+}
+
+html[data-theme="dark"] .dashboard-header-actions .theme-toggle {
+  border-color: #50685e;
+  background: #1b2b27;
+  color: #c8efdc;
+}
+
+html[data-theme="dark"] .logbook-table caption {
+  background: #1b2a27;
+  color: #edf4f1;
+}
+
+html[data-theme="dark"] .logbook-table th {
+  border-color: #43564f;
+  background: #253832;
+  color: #e5efea;
+}
+
+html[data-theme="dark"] .logbook-table td {
+  border-color: #43564f;
+  color: #dce7e2;
+}
+
+html[data-theme="dark"] .logbook-table tbody tr:nth-child(even) {
+  background: #1b2a27;
+}
+
+html[data-theme="dark"] body.login-background .login-content input:not(.submit-button) {
+  border-color: #486159;
+  background: #152623;
+  color: #f0f6f3;
+}
+
+html[data-theme="dark"] body.login-background .login-content input::placeholder {
+  color: #a5b8b1;
+}
+
+html[data-theme="dark"] body.login-background .login-panel > .theme-toggle {
+  border-color: rgba(255, 255, 255, 0.58);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+html[data-theme="dark"] body * {
+  color: #fff !important;
+}
+
+html[data-theme="dark"] body input::placeholder,
+html[data-theme="dark"] body textarea::placeholder,
+html[data-theme="dark"] body .record-search-input::placeholder {
+  color: #b8c8c1 !important;
+}
+
+html[data-theme="dark"] body option {
+  background: #172522;
+  color: #fff;
+}
+
+html[data-theme="dark"] body .record-action-delete {
+  border-color: #8d514b;
+  background: #452a28;
+}
+
 @media print {
+  @page {
+    size: landscape;
+    margin: 12mm;
+  }
+
   html,
   body {
     min-height: 0 !important;
@@ -1539,5 +1901,54 @@ a {
 
   body.print-record-mode .outgoing-record.print-target .record-actions {
     display: none !important;
+  }
+
+  body.dashboard-background:has(.logbook-section) {
+    display: block !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .page-shell-dashboard:has(.logbook-section) {
+    display: block !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .page-shell-dashboard:has(.logbook-section) .workspace-sidebar,
+  .page-shell-dashboard:has(.logbook-section) .dashboard-header,
+  .page-shell-dashboard:has(.logbook-section) .login-copyright,
+  .page-shell-dashboard:has(.logbook-section) .logbook-toolbar,
+  .page-shell-dashboard:has(.logbook-section) .month-filter,
+  .page-shell-dashboard:has(.logbook-section) .year-record-count {
+    display: none !important;
+  }
+
+  .page-shell-dashboard:has(.logbook-section) .dashboard-content {
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .logbook-table-scroll {
+    overflow: visible !important;
+    border: 0 !important;
+  }
+
+  .logbook-table {
+    min-width: 0 !important;
+    font-size: 9pt !important;
+  }
+
+  .logbook-table caption {
+    display: table-caption !important;
+  }
+
+  .logbook-table th,
+  .logbook-table td {
+    padding: 5px !important;
   }
 }

@@ -173,11 +173,11 @@ $hasAdmin = $adminCount !== false && (int) $adminCount->fetchColumn() > 0;
 $showSetup = $account === null && !$hasAdmin && isset($_GET['setup']);
 $requestedOutgoingView = $_GET['view'] ?? 'dashboard';
 $outgoingView = is_string($requestedOutgoingView)
-    && in_array($requestedOutgoingView, ['dashboard', 'entry', 'list'], true)
+    && in_array($requestedOutgoingView, ['dashboard', 'entry', 'list', 'logbook'], true)
         ? $requestedOutgoingView
         : 'dashboard';
 $requestedRecordYear = filter_var($_GET['year'] ?? null, FILTER_VALIDATE_INT);
-$outgoingRecordYear = $outgoingView === 'list'
+$outgoingRecordYear = in_array($outgoingView, ['list', 'logbook'], true)
     && $requestedRecordYear !== false
     && $requestedRecordYear !== null
     && $requestedRecordYear >= 1970
@@ -219,12 +219,12 @@ $outgoingRecordCount = $account !== null && $account['role'] === 'outgoing'
     : 0;
 $outgoingYears = $account !== null
     && $account['role'] === 'outgoing'
-    && $outgoingView === 'list'
+    && in_array($outgoingView, ['list', 'logbook'], true)
         ? list_outgoing_years($database, (int) $account['id'])
         : [];
 $outgoingEntries = $account !== null
     && $account['role'] === 'outgoing'
-    && $outgoingView === 'list'
+    && in_array($outgoingView, ['list', 'logbook'], true)
     && $outgoingRecordYear !== null
     && $outgoingEditId === null
     ? list_outgoing_records(
@@ -238,7 +238,7 @@ $outgoingEntries = $account !== null
     : [];
 $outgoingImages = $account !== null
     && $account['role'] === 'outgoing'
-    && $outgoingView === 'list'
+    && in_array($outgoingView, ['list', 'logbook'], true)
     && $outgoingRecordYear !== null
     ? list_outgoing_images(
         $database,
@@ -264,6 +264,7 @@ $outgoingPageTitles = [
     'dashboard' => 'Dashboard',
     'entry' => 'Outgoing Entry',
     'list' => 'Outgoing List',
+    'logbook' => 'Logbook',
 ];
 $pageTitle = $account !== null && $account['role'] === 'outgoing'
     ? $outgoingPageTitles[$outgoingView] . ' | DAR-RMS'
@@ -308,6 +309,10 @@ $pageTitle = $account !== null && $account['role'] === 'outgoing'
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12" /><circle cx="4" cy="6" r=".7" /><circle cx="4" cy="12" r=".7" /><circle cx="4" cy="18" r=".7" /></svg>
               <span>List</span>
             </a>
+            <a href="index.php?view=logbook"<?= $outgoingView === 'logbook' ? ' aria-current="page"' : '' ?>>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 4.5h12a2 2 0 0 1 2 2v13H8a2 2 0 0 1-2-2v-13Z" /><path d="M6 4.5v13a2 2 0 0 1-2 2M10 8h6m-6 4h6m-6 4h4" /></svg>
+              <span>Logbook</span>
+            </a>
           </nav>
         <?php else: ?>
           <div class="welcome-copy">
@@ -318,15 +323,22 @@ $pageTitle = $account !== null && $account['role'] === 'outgoing'
         <?php endif; ?>
 
         <div class="panel-footer">
-          <span>MADE FOR THE DETAILS</span>
-          <span class="footer-divider"></span>
-          <span>© 2026 DAR-RMS</span>
+          
         </div>
         <span class="decorative-orb orb-one" aria-hidden="true"></span>
         <span class="decorative-orb orb-two" aria-hidden="true"></span>
       </section>
 
       <section class="login-panel" aria-label="Account access">
+        <?php if ($account === null): ?>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode" data-theme-toggle>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4h8l1 4H7l1-4Z" /><path d="M8 8h8v11l-4 2-4-2V8Z" /><path d="M10 12h4" /></svg>
+          </button>
+        <?php endif; ?>
+        <?php if ($account === null): ?>
+          <span class="decorative-orb orb-one login-orb-one" aria-hidden="true"></span>
+          <span class="decorative-orb orb-two login-orb-two" aria-hidden="true"></span>
+        <?php endif; ?>
         <div class="mobile-brand-wrap">
           <a class="brand brand-dark" href="index.php" aria-label="DAR-RMS home">
             <img class="brand-logo" src="assets/dar-rms-logo.png" alt="" />

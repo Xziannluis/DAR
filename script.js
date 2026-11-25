@@ -1,5 +1,36 @@
 "use strict";
 
+const themeToggleButtons = document.querySelectorAll("[data-theme-toggle]");
+let savedTheme = "light";
+try {
+  savedTheme = localStorage.getItem("dar-rms-theme") || "light";
+} catch {
+  savedTheme = "light";
+}
+if (savedTheme === "dark") document.documentElement.dataset.theme = "dark";
+
+const updateThemeToggleState = () => {
+  const isDark = document.documentElement.dataset.theme === "dark";
+  themeToggleButtons.forEach((button) => button.setAttribute("aria-pressed", String(isDark)));
+};
+updateThemeToggleState();
+themeToggleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const isDark = document.documentElement.dataset.theme !== "dark";
+    if (isDark) {
+      document.documentElement.dataset.theme = "dark";
+    } else {
+      delete document.documentElement.dataset.theme;
+    }
+    try {
+      localStorage.setItem("dar-rms-theme", isDark ? "dark" : "light");
+    } catch {
+      // Keep the in-page theme toggle working if storage is unavailable.
+    }
+    updateThemeToggleState();
+  });
+});
+
 document.querySelectorAll("[data-password-toggle]").forEach((toggle) => {
   toggle.addEventListener("click", () => {
     const input = document.getElementById(toggle.dataset.passwordToggle);
@@ -143,6 +174,11 @@ document.querySelectorAll("[data-service-picker]").forEach((picker) => {
 
 document.addEventListener("click", (event) => {
   if (!(event.target instanceof Element)) return;
+
+  if (event.target.closest("[data-print-logbook]")) {
+    window.print();
+    return;
+  }
 
   const button = event.target.closest("[data-print-record]");
   if (!(button instanceof HTMLButtonElement)) return;
