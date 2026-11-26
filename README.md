@@ -54,6 +54,7 @@ updating or removing records, and printing individual record cards.
 - `pages/outgoing-dashboard.php` shows the signed-in user's total record count.
 - `pages/outgoing-entry.php` and `pages/outgoing-list.php` render the sidebar views.
 - `outgoing-image.php` serves image and PDF attachments to their authenticated owner.
-- `styles.css` contains the responsive interface and login background styling.
+- `assets/css/styles.css` contains the responsive interface and login background styling.
+- `assets/js/script.js` contains the browser-side interface interactions.
 - `assets/login-background.jpg` is the softly blurred login background photo.
 - `assets/dar-rms-logo.png` is the DAR-RMS application logo.

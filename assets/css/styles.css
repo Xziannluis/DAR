@@ -71,7 +71,7 @@ body.dashboard-background::before {
 body.login-background::before {
   background:
     linear-gradient(rgba(4, 28, 20, 0.72), rgba(3, 18, 15, 0.84)),
-    url("assets/dar-login-background.jpg") center / cover no-repeat;
+    url("../dar-login-background.jpg") center / cover no-repeat;
   filter: blur(3px);
   opacity: 1;
 }
@@ -79,7 +79,7 @@ body.login-background::before {
 body.dashboard-background::before {
   background:
     linear-gradient(rgba(3, 22, 16, 0.56), rgba(3, 22, 16, 0.66)),
-    url("assets/dar-login-background.jpg") center / cover no-repeat;
+    url("../dar-login-background.jpg") center / cover no-repeat;
   filter: blur(2px);
   opacity: 1;
 }
@@ -2035,7 +2035,7 @@ html:not([data-theme="dark"]) .logbook-table td {
   body.login-background .page-shell {
     background:
       linear-gradient(rgba(8, 33, 30, 0.34), rgba(8, 33, 30, 0.46)),
-      url("assets/dar-login-background.jpg") center / cover no-repeat;
+      url("../dar-login-background.jpg") center / cover no-repeat;
   }
 
   body.login-background .login-panel {
@@ -2234,7 +2234,7 @@ body.login-background::before {
   inset: -12px;
   background:
     linear-gradient(90deg, rgba(4, 28, 17, 0.58), rgba(4, 26, 18, 0.68)),
-    url("assets/dar-login-background.jpg") center / cover no-repeat;
+    url("../dar-login-background.jpg") center / cover no-repeat;
   filter: blur(2px);
   opacity: 1;
 }
