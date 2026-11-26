@@ -39,7 +39,7 @@
     <div class="list-heading">
       <a class="year-list-back" href="index.php?view=list">All years</a>
     </div>
-    <form class="month-filter" method="get">
+    <form class="month-filter" method="get" data-logbook-filters>
       <input type="hidden" name="view" value="list" />
       <input type="hidden" name="year" value="<?= escape_html($outgoingRecordYear) ?>" />
       <div class="record-filter-field">
@@ -81,7 +81,6 @@
           placeholder="Name, subject, document type, service..."
         />
       </div>
-      <button class="secondary-button" type="submit">Apply filters</button>
       <?php if ($outgoingRecordMonth !== null || $outgoingRecordDay !== null || $outgoingRecordBook !== null || $outgoingRecordSearch !== ''): ?>
         <a class="year-list-back" href="index.php?<?= escape_html(outgoing_list_return_query($outgoingRecordYear, null)) ?>">Clear filters</a>
       <?php endif; ?>

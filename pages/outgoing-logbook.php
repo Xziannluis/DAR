@@ -30,7 +30,6 @@ $monthNames = [
       <a class="year-list-back" href="index.php?view=logbook">All years</a>
       <div class="logbook-toolbar-actions">
         <button class="secondary-button" type="button" data-print-logbook>Print</button>
-        <a class="year-list-back" href="index.php?view=list&amp;year=<?= escape_html($outgoingRecordYear) ?>">Manage records</a>
       </div>
     </div>
     <form class="month-filter" method="get" data-logbook-filters>
