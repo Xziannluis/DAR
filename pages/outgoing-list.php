@@ -61,7 +61,7 @@
         </select>
       </div>
       <div class="record-filter-field record-search-field">
-        <label for="record-search">Search name or record number</label>
+        <label for="record-search">Search records by keyword</label>
         <input
           class="record-search-input"
           id="record-search"
@@ -69,7 +69,7 @@
           type="search"
           maxlength="100"
           value="<?= escape_html($outgoingRecordSearch) ?>"
-          placeholder="Enter a name or record number"
+          placeholder="Name, subject, document type, service..."
         />
       </div>
       <button class="secondary-button" type="submit">Apply filters</button>

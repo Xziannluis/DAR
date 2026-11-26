@@ -77,7 +77,11 @@ body.login-background::before {
 }
 
 body.dashboard-background::before {
-  background: url("assets/login-background.jpg") center / cover no-repeat;
+  background:
+    linear-gradient(rgba(3, 22, 16, 0.56), rgba(3, 22, 16, 0.66)),
+    url("assets/dar-login-background.jpg") center / cover no-repeat;
+  filter: blur(2px);
+  opacity: 1;
 }
 
 button,
@@ -118,6 +122,51 @@ a {
 
 .page-shell-dashboard .login-panel {
   padding: 34px;
+}
+
+/* Shared glass treatment for the authenticated workspace pages. */
+body.dashboard-background .page-shell-dashboard {
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  border-radius: 18px;
+  background: rgba(234, 244, 237, 0.28);
+  box-shadow: 0 28px 80px rgba(4, 22, 16, 0.28), 0 2px 12px rgba(4, 22, 16, 0.14);
+  backdrop-filter: blur(16px);
+}
+
+body.dashboard-background .page-shell-dashboard .welcome-panel.workspace-sidebar {
+  background:
+    radial-gradient(ellipse at 12% 80%, rgba(31, 116, 70, 0.32), transparent 48%),
+    linear-gradient(155deg, rgba(5, 51, 31, 0.94), rgba(5, 38, 27, 0.92));
+}
+
+body.dashboard-background .page-shell-dashboard .login-panel {
+  background: rgba(246, 250, 246, 0.76);
+  backdrop-filter: blur(18px);
+}
+
+body.dashboard-background .page-shell-dashboard .account-form,
+body.dashboard-background .page-shell-dashboard .month-filter,
+body.dashboard-background .page-shell-dashboard .summary-card,
+body.dashboard-background .page-shell-dashboard .dashboard-chart-card,
+body.dashboard-background .page-shell-dashboard .recent-activity-card,
+body.dashboard-background .page-shell-dashboard .year-card,
+body.dashboard-background .page-shell-dashboard .outgoing-record,
+body.dashboard-background .page-shell-dashboard .service-picker-row,
+body.dashboard-background .page-shell-dashboard .logbook-table-scroll,
+body.dashboard-background .page-shell-dashboard .account-list li,
+body.dashboard-background .page-shell-dashboard .edit-attachments {
+  border-color: rgba(255, 255, 255, 0.64);
+  background-color: rgba(250, 252, 249, 0.77);
+  box-shadow: 0 10px 28px rgba(26, 57, 42, 0.07);
+  backdrop-filter: blur(10px);
+}
+
+body.dashboard-background .page-shell-dashboard .logbook-table th {
+  background: rgba(230, 240, 233, 0.9);
+}
+
+body.dashboard-background .page-shell-dashboard .logbook-table tbody tr:nth-child(even) {
+  background: rgba(241, 247, 242, 0.78);
 }
 
 .page-shell-dashboard .dashboard-content {
@@ -267,6 +316,12 @@ a {
 .workspace-nav a[aria-current="page"] {
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
+}
+
+body.dashboard-background .workspace-nav a[aria-current="page"] {
+  border: 1px solid rgba(212, 247, 222, 0.34);
+  background: linear-gradient(105deg, rgba(199, 239, 209, 0.2), rgba(173, 222, 187, 0.08));
+  box-shadow: inset 0 0 18px rgba(181, 244, 194, 0.13), 0 0 14px rgba(161, 237, 178, 0.1);
 }
 
 .workspace-nav svg {
@@ -811,6 +866,220 @@ body.login-background .login-content .submit-button:hover {
   font-size: 11px;
 }
 
+.outgoing-dashboard .dashboard-header {
+  margin-bottom: 22px;
+}
+
+.dashboard-overview {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.12fr) minmax(250px, 0.88fr);
+  align-items: start;
+  gap: 12px;
+  margin-top: 38px;
+}
+
+.dashboard-overview .summary-card {
+  width: 100%;
+  min-height: 184px;
+  padding: 24px 25px;
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(250, 253, 249, 0.76);
+  box-shadow: 0 12px 28px rgba(34, 78, 50, 0.1), inset 0 0 0 1px rgba(130, 180, 139, 0.13);
+  backdrop-filter: blur(12px);
+}
+
+.dashboard-overview .summary-label {
+  color: #26362c;
+  font-size: 13px;
+}
+
+.dashboard-overview .summary-count {
+  margin-top: 14px;
+  color: #328354;
+  font-size: 54px;
+  text-shadow: 0 4px 14px rgba(54, 145, 82, 0.24);
+}
+
+.dashboard-overview .summary-card p {
+  margin-top: 8px;
+  color: #52645a;
+  font-size: 11px;
+}
+
+.dashboard-overview-side {
+  display: grid;
+  gap: 12px;
+}
+
+.dashboard-chart-card,
+.recent-activity-card {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.86);
+  border-radius: 13px;
+  background: rgba(250, 253, 249, 0.66);
+  box-shadow: 0 10px 26px rgba(34, 78, 50, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.dashboard-chart-card {
+  display: grid;
+  min-height: 164px;
+  place-items: center;
+  padding: 14px 16px 10px;
+}
+
+.dashboard-chart-card svg {
+  display: block;
+  width: 100%;
+  height: 130px;
+  overflow: visible;
+}
+
+.chart-area {
+  fill: url(#records-chart-fill);
+}
+
+.chart-line {
+  fill: none;
+  stroke: url(#records-chart-line);
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.chart-bar {
+  fill: none;
+  stroke: rgba(100, 174, 114, 0.28);
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+.recent-activity-card {
+  min-height: 194px;
+  padding: 17px 18px 10px;
+}
+
+.recent-activity-card h2 {
+  margin: 0 0 8px;
+  color: #26362c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.recent-activity-card ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recent-activity-card li {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid rgba(61, 91, 69, 0.11);
+}
+
+.activity-icon {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(76, 143, 101, 0.13);
+  color: #4c8561;
+}
+
+.activity-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.activity-copy {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.activity-copy strong {
+  overflow: hidden;
+  color: #2d3931;
+  font-size: 10px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activity-copy time,
+.activity-book {
+  color: #728078;
+  font-size: 9px;
+}
+
+.activity-book {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.activity-view-button {
+  display: inline-flex;
+  min-height: 27px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 9px;
+  border: 1px solid rgba(53, 119, 78, 0.26);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.62);
+  color: #2f7650;
+  font-size: 9px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+.activity-view-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(53, 119, 78, 0.48);
+  background: #fff;
+}
+
+.activity-view-button:focus-visible {
+  outline: 2px solid #4c9a68;
+  outline-offset: 2px;
+}
+
+.recent-activity-empty {
+  margin: 15px 0;
+  color: #728078;
+  font-size: 11px;
+}
+
+.page-shell-dashboard .outgoing-dashboard > .form-message[data-kind="success"] {
+  position: fixed;
+  top: 22px;
+  left: 50%;
+  z-index: 5;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  min-height: 0;
+  margin: 0;
+  padding: 12px 18px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: 11px;
+  background: rgba(228, 245, 229, 0.91);
+  box-shadow: 0 8px 24px rgba(22, 51, 34, 0.18);
+  color: #294d34;
+  font-size: 12px;
+  backdrop-filter: blur(12px);
+}
+
 .secondary-button {
   flex: none;
   min-height: 36px;
@@ -1069,6 +1338,23 @@ body.login-background .login-content .submit-button:hover {
 .outgoing-entry-form > .submit-button {
   height: 42px;
   font-size: 12px;
+}
+
+html:not([data-theme="dark"]) body.dashboard-background .outgoing-entry-form .outgoing-fields label {
+  color: #40574c;
+}
+
+html:not([data-theme="dark"]) body.dashboard-background .outgoing-entry-form .outgoing-fields input,
+html:not([data-theme="dark"]) body.dashboard-background .outgoing-entry-form .outgoing-fields select,
+html:not([data-theme="dark"]) body.dashboard-background .outgoing-entry-form .outgoing-fields textarea {
+  border-color: #d5e0d9;
+  background-color: rgba(255, 255, 255, 0.94);
+  color: #23372e;
+}
+
+html:not([data-theme="dark"]) body.dashboard-background .outgoing-entry-form .outgoing-fields select option {
+  background: #fff;
+  color: #23372e;
 }
 
 .outgoing-records-section {
@@ -1580,6 +1866,19 @@ html:not([data-theme="dark"]) .logbook-table td {
     width: 100%;
   }
 
+  .dashboard-overview {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 24px;
+  }
+
+  .dashboard-overview .summary-card {
+    min-height: 160px;
+  }
+
+  .dashboard-overview-side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .welcome-panel {
     display: none;
   }
@@ -2028,6 +2327,48 @@ html[data-theme="dark"] .edit-attachments {
   color: #e2ebe7;
 }
 
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .summary-card,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .dashboard-chart-card,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .recent-activity-card,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .account-form,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .month-filter,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .year-card,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .outgoing-record,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .service-picker-row,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .logbook-table-scroll,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .account-list li,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .edit-attachments {
+  border-color: #354842;
+  background: rgba(27, 42, 39, 0.96);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .recent-activity-card li {
+  border-top-color: #354842;
+}
+
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .activity-icon {
+  background: #29473a;
+}
+
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .logbook-table-scroll {
+  border-color: #43564f;
+  background: #1b2a27;
+}
+
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .logbook-table th,
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .logbook-table td {
+  border-color: #43564f;
+}
+
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .logbook-table th {
+  background: #253832;
+}
+
+html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .logbook-table tbody tr:nth-child(even) {
+  background: #1b2a27;
+}
+
 html[data-theme="dark"] .account-list {
   border-color: #354842;
   border-radius: 9px;
@@ -2076,6 +2417,12 @@ html[data-theme="dark"] .dashboard-header-actions .theme-toggle {
   border-color: #50685e;
   background: #1b2b27;
   color: #c8efdc;
+}
+
+html[data-theme="dark"] .activity-view-button {
+  border-color: #50685e;
+  background: #1b2b27;
+  color: #e1f2e8;
 }
 
 html[data-theme="dark"] .role-badge.role-admin {
@@ -2216,6 +2563,8 @@ html[data-theme="dark"] body .record-action-delete {
   }
 
   .page-shell-dashboard:has(.logbook-section) .workspace-sidebar,
+  .page-shell-dashboard:has(.logbook-section) .brand,
+  .page-shell-dashboard:has(.logbook-section) .mobile-brand-wrap,
   .page-shell-dashboard:has(.logbook-section) .dashboard-header,
   .page-shell-dashboard:has(.logbook-section) .login-copyright,
   .page-shell-dashboard:has(.logbook-section) .logbook-toolbar,
@@ -2248,6 +2597,11 @@ html[data-theme="dark"] body .record-action-delete {
   .logbook-table th,
   .logbook-table td {
     padding: 5px !important;
+    color: #111 !important;
+  }
+
+  .logbook-table caption {
+    color: #111 !important;
   }
 
   html[data-theme="dark"] .logbook-table-scroll,

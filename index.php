@@ -217,6 +217,11 @@ $accountList = $account !== null && $account['role'] === 'admin'
 $outgoingRecordCount = $account !== null && $account['role'] === 'outgoing'
     ? count_outgoing_records($database, (int) $account['id'])
     : 0;
+$outgoingRecentEntries = $account !== null
+    && $account['role'] === 'outgoing'
+    && $outgoingView === 'dashboard'
+        ? array_slice(list_outgoing_records($database, (int) $account['id']), 0, 3)
+        : [];
 $outgoingYears = $account !== null
     && $account['role'] === 'outgoing'
     && in_array($outgoingView, ['list', 'logbook'], true)
@@ -317,7 +322,7 @@ $pageTitle = $account !== null && $account['role'] === 'outgoing'
         <?php else: ?>
           <div class="welcome-copy">
             <span class="eyebrow"><span class="status-dot"></span> YOUR WORKSPACE, IN SYNC</span>
-            <h1>Every movement.<br />One clear picture.</h1>
+            <h1>Every record, in order.<br />Every detail, at hand.</h1>
             <p>Keep outgoing records organized, accurate, and easy to find.</p>
           </div>
         <?php endif; ?>

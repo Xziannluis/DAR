@@ -141,9 +141,10 @@ document.querySelectorAll("[data-service-picker]").forEach((picker) => {
       row.querySelectorAll(".service-detail-field").forEach((field) => {
         const active = field.dataset.method === serviceSelect.value;
         field.hidden = !active;
-        const detailInput = field.querySelector("input");
-        detailInput.disabled = !active;
-        detailInput.required = active;
+        field.querySelectorAll("input").forEach((detailInput) => {
+          detailInput.disabled = !active;
+          detailInput.required = active;
+        });
       });
       syncRows();
     });

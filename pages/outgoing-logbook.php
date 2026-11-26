@@ -55,8 +55,8 @@ $monthNames = [
         </select>
       </div>
       <div class="record-filter-field record-search-field">
-        <label for="logbook-search">Search name or record number</label>
-        <input class="record-search-input" id="logbook-search" name="search" type="search" maxlength="100" value="<?= escape_html($outgoingRecordSearch) ?>" placeholder="Enter a name or record number" />
+        <label for="logbook-search">Search records by keyword</label>
+        <input class="record-search-input" id="logbook-search" name="search" type="search" maxlength="100" value="<?= escape_html($outgoingRecordSearch) ?>" placeholder="Name, subject, document type, service..." />
       </div>
       <button class="secondary-button" type="submit">Apply filters</button>
       <?php if ($outgoingRecordBook !== null || $outgoingRecordMonth !== null || $outgoingRecordSearch !== ''): ?>

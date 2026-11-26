@@ -312,9 +312,11 @@ function list_outgoing_records(
     $searchFilter = $search === ''
         ? ''
         : ' AND (
-            LOCATE(LOWER(:record_search), LOWER(r.record_number)) > 0
-            OR LOCATE(LOWER(:addressee_search), LOWER(r.addressee)) > 0
-            OR LOCATE(LOWER(:source_search), LOWER(r.source_origin)) > 0
+            LOCATE(LOWER(:record_search), LOWER(CONCAT_WS(" ",
+                r.record_number, r.addressee, r.source_origin, r.subject_matter,
+                r.tdoc, r.delivery_method, r.delivery_details,
+                r.location_type, r.location_details
+            ))) > 0
         )';
     $statement = $database->prepare(
         'SELECT r.*,
@@ -340,8 +342,6 @@ function list_outgoing_records(
     }
     if ($search !== '') {
         $parameters['record_search'] = $search;
-        $parameters['addressee_search'] = $search;
-        $parameters['source_search'] = $search;
     }
     $statement->execute($parameters);
     return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -386,9 +386,11 @@ function list_outgoing_images(
     $searchFilter = $search === ''
         ? ''
         : ' AND (
-            LOCATE(LOWER(:record_search), LOWER(r.record_number)) > 0
-            OR LOCATE(LOWER(:addressee_search), LOWER(r.addressee)) > 0
-            OR LOCATE(LOWER(:source_search), LOWER(r.source_origin)) > 0
+            LOCATE(LOWER(:record_search), LOWER(CONCAT_WS(" ",
+                r.record_number, r.addressee, r.source_origin, r.subject_matter,
+                r.tdoc, r.delivery_method, r.delivery_details,
+                r.location_type, r.location_details
+            ))) > 0
         )';
     $statement = $database->prepare(
         'SELECT i.id, i.record_id, i.original_name
@@ -409,8 +411,6 @@ function list_outgoing_images(
     }
     if ($search !== '') {
         $parameters['record_search'] = $search;
-        $parameters['addressee_search'] = $search;
-        $parameters['source_search'] = $search;
     }
     $statement->execute($parameters);
     $imagesByRecord = [];
