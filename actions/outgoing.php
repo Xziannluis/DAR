@@ -6,7 +6,8 @@ function outgoing_list_return_query(
     mixed $monthValue,
     ?int $editId = null,
     mixed $searchValue = null,
-    mixed $bookValue = null
+    mixed $bookValue = null,
+    mixed $dayValue = null
 ): string
 {
     $query = ['view' => 'list'];
@@ -25,6 +26,10 @@ function outgoing_list_return_query(
     }
     if ($editId !== null && $editId > 0) {
         $query['edit'] = $editId;
+    }
+    $day = filter_var($dayValue, FILTER_VALIDATE_INT);
+    if ($day !== false && $day !== null && $day >= 1 && $day <= 31) {
+        $query['day'] = $day;
     }
     if (is_string($searchValue) && trim($searchValue) !== '') {
         $query['search'] = trim($searchValue);
@@ -247,7 +252,8 @@ function update_outgoing_record(PDO $database, array $account): never
         $_POST['return_month'] ?? null,
         $recordId,
         $_POST['return_search'] ?? null,
-        $_POST['return_book'] ?? null
+        $_POST['return_book'] ?? null,
+        $_POST['return_day'] ?? null
     );
     $record = validate_outgoing_record_input($returnQuery);
     $existing = find_outgoing_record(
@@ -263,7 +269,8 @@ function update_outgoing_record(PDO $database, array $account): never
             $_POST['return_month'] ?? null,
             null,
             $_POST['return_search'] ?? null,
-            $_POST['return_book'] ?? null
+            $_POST['return_book'] ?? null,
+            $_POST['return_day'] ?? null
         ));
     }
 
@@ -327,7 +334,8 @@ function update_outgoing_record(PDO $database, array $account): never
             $returnMonth,
             null,
             $_POST['return_search'] ?? null,
-            $_POST['return_book'] ?? null
+            $_POST['return_book'] ?? null,
+            $_POST['return_day'] ?? null
         )
     );
 }
@@ -345,7 +353,8 @@ function delete_outgoing_record(PDO $database, array $account): never
         $_POST['return_month'] ?? null,
         null,
         $_POST['return_search'] ?? null,
-        $_POST['return_book'] ?? null
+        $_POST['return_book'] ?? null,
+        $_POST['return_day'] ?? null
     );
     $statement = $database->prepare(
         'DELETE FROM outgoing_records WHERE id = :id AND account_id = :account_id'

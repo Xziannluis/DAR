@@ -54,12 +54,21 @@ $monthNames = [
           <?php endforeach; ?>
         </select>
       </div>
+      <div class="record-filter-field">
+        <label for="logbook-day-filter">Date received day</label>
+        <select id="logbook-day-filter" name="day">
+          <option value="">All days</option>
+          <?php for ($dayNumber = 1; $dayNumber <= 31; $dayNumber++): ?>
+            <option value="<?= $dayNumber ?>"<?= $outgoingRecordDay === $dayNumber ? ' selected' : '' ?>><?= sprintf('%02d', $dayNumber) ?></option>
+          <?php endfor; ?>
+        </select>
+      </div>
       <div class="record-filter-field record-search-field">
         <label for="logbook-search">Search records by keyword</label>
         <input class="record-search-input" id="logbook-search" name="search" type="search" maxlength="100" value="<?= escape_html($outgoingRecordSearch) ?>" placeholder="Name, subject, document type, service..." />
       </div>
       <button class="secondary-button" type="submit">Apply filters</button>
-      <?php if ($outgoingRecordBook !== null || $outgoingRecordMonth !== null || $outgoingRecordSearch !== ''): ?>
+      <?php if ($outgoingRecordBook !== null || $outgoingRecordMonth !== null || $outgoingRecordDay !== null || $outgoingRecordSearch !== ''): ?>
         <a class="year-list-back" href="index.php?view=logbook&amp;year=<?= escape_html($outgoingRecordYear) ?>">Clear filters</a>
       <?php endif; ?>
     </form>
@@ -67,7 +76,7 @@ $monthNames = [
     <?php if ($outgoingEntries === []): ?>
       <p class="empty-records">No logbook records match the selected filters.</p>
     <?php else: ?>
-      <p class="year-record-count">Showing up to 50<?= $outgoingRecordBook === null && $outgoingRecordSearch === '' ? '' : ' matching' ?> records.</p>
+      <p class="year-record-count">Showing up to 50<?= $outgoingRecordBook === null && $outgoingRecordSearch === '' && $outgoingRecordMonth === null && $outgoingRecordDay === null ? '' : ' matching' ?> records.</p>
       <div class="logbook-table-scroll">
         <table class="logbook-table">
           <caption>Book : <?= $outgoingRecordBook === null ? 'All Books' : 'B' . (int) $outgoingRecordBook ?></caption>

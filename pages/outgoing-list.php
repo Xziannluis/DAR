@@ -60,6 +60,15 @@
           <?php endforeach; ?>
         </select>
       </div>
+      <div class="record-filter-field">
+        <label for="record-day-filter">Filter by day received</label>
+        <select id="record-day-filter" name="day">
+          <option value="">All days</option>
+          <?php for ($dayNumber = 1; $dayNumber <= 31; $dayNumber++): ?>
+            <option value="<?= $dayNumber ?>"<?= $outgoingRecordDay === $dayNumber ? ' selected' : '' ?>><?= sprintf('%02d', $dayNumber) ?></option>
+          <?php endfor; ?>
+        </select>
+      </div>
       <div class="record-filter-field record-search-field">
         <label for="record-search">Search records by keyword</label>
         <input
@@ -73,7 +82,7 @@
         />
       </div>
       <button class="secondary-button" type="submit">Apply filters</button>
-      <?php if ($outgoingRecordMonth !== null || $outgoingRecordBook !== null || $outgoingRecordSearch !== ''): ?>
+      <?php if ($outgoingRecordMonth !== null || $outgoingRecordDay !== null || $outgoingRecordBook !== null || $outgoingRecordSearch !== ''): ?>
         <a class="year-list-back" href="index.php?<?= escape_html(outgoing_list_return_query($outgoingRecordYear, null)) ?>">Clear filters</a>
       <?php endif; ?>
     </form>
@@ -82,17 +91,17 @@
       <p class="empty-records">
         <?php if ($outgoingRecordSearch !== ''): ?>
           No records matched "<?= escape_html($outgoingRecordSearch) ?>".
-        <?php elseif ($outgoingRecordBook !== null && $outgoingRecordMonth === null): ?>
+        <?php elseif ($outgoingRecordBook !== null && $outgoingRecordMonth === null && $outgoingRecordDay === null): ?>
           No records were found in Book <?= (int) $outgoingRecordBook ?> for <?= escape_html($outgoingRecordYear) ?>.
-        <?php elseif ($outgoingRecordMonth === null): ?>
+        <?php elseif ($outgoingRecordMonth === null && $outgoingRecordDay === null): ?>
           Your saved outgoing records will appear here.
         <?php else: ?>
-          No records have a date of receive in <?= escape_html($monthNames[$outgoingRecordMonth]) ?> <?= escape_html($outgoingRecordYear) ?>.
+          No records match the selected received date<?= $outgoingRecordMonth === null ? '' : ' in ' . escape_html($monthNames[$outgoingRecordMonth]) ?><?= $outgoingRecordDay === null ? '' : ' on day ' . sprintf('%02d', $outgoingRecordDay) ?> <?= escape_html($outgoingRecordYear) ?>.
         <?php endif; ?>
       </p>
     <?php else: ?>
       <p class="year-record-count">
-        Showing up to 50<?= $outgoingRecordSearch === '' && $outgoingRecordBook === null ? '' : ' matching' ?> records.
+        Showing up to 50<?= $outgoingRecordSearch === '' && $outgoingRecordBook === null && $outgoingRecordMonth === null && $outgoingRecordDay === null ? '' : ' matching' ?> records.
       </p>
       <div class="outgoing-record-list">
         <?php foreach ($outgoingEntries as $entry): ?>
@@ -118,7 +127,8 @@
                 $outgoingRecordMonth,
                 $recordId,
                 $outgoingRecordSearch,
-                $outgoingRecordBook
+                $outgoingRecordBook,
+                $outgoingRecordDay
             );
             $receivedDate = (string) $entry['date_sent'];
             $deliveryMethods = explode(',', (string) $entry['delivery_method']);
@@ -158,6 +168,7 @@
                   <input type="hidden" name="record_id" value="<?= $recordId ?>" />
                   <input type="hidden" name="return_year" value="<?= $outgoingRecordYear ?>" />
                   <input type="hidden" name="return_month" value="<?= $outgoingRecordMonth ?? '' ?>" />
+                  <input type="hidden" name="return_day" value="<?= $outgoingRecordDay ?? '' ?>" />
                   <input type="hidden" name="return_search" value="<?= escape_html($outgoingRecordSearch) ?>" />
                   <input type="hidden" name="return_book" value="<?= $outgoingRecordBook ?? '' ?>" />
                   <button class="record-action-delete" type="submit">Remove</button>

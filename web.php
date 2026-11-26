@@ -303,12 +303,14 @@ function list_outgoing_records(
     ?int $year = null,
     ?int $month = null,
     string $search = '',
-    ?int $book = null
+    ?int $book = null,
+    ?int $day = null
 ): array
 {
     $yearFilter = $year === null ? '' : ' AND r.record_year = :record_year';
     $monthFilter = $month === null ? '' : ' AND MONTH(r.date_sent) = :record_month';
     $bookFilter = $book === null ? '' : ' AND r.book_number = :book_number';
+    $dayFilter = $day === null ? '' : ' AND DAY(r.date_sent) = :record_day';
     $searchFilter = $search === ''
         ? ''
         : ' AND (
@@ -326,6 +328,7 @@ function list_outgoing_records(
          ' . $yearFilter . '
          ' . $monthFilter . '
          ' . $bookFilter . '
+         ' . $dayFilter . '
          ' . $searchFilter . '
          ORDER BY r.created_at DESC, r.id DESC
          LIMIT 50'
@@ -339,6 +342,9 @@ function list_outgoing_records(
     }
     if ($book !== null) {
         $parameters['book_number'] = $book;
+    }
+    if ($day !== null) {
+        $parameters['record_day'] = $day;
     }
     if ($search !== '') {
         $parameters['record_search'] = $search;
@@ -378,11 +384,13 @@ function list_outgoing_images(
     int $accountId,
     ?int $year = null,
     ?int $month = null,
-    string $search = ''
+    string $search = '',
+    ?int $day = null
 ): array
 {
     $yearFilter = $year === null ? '' : ' AND r.record_year = :record_year';
     $monthFilter = $month === null ? '' : ' AND MONTH(r.date_sent) = :record_month';
+    $dayFilter = $day === null ? '' : ' AND DAY(r.date_sent) = :record_day';
     $searchFilter = $search === ''
         ? ''
         : ' AND (
@@ -399,6 +407,7 @@ function list_outgoing_images(
          WHERE r.account_id = :account_id
          ' . $yearFilter . '
          ' . $monthFilter . '
+         ' . $dayFilter . '
          ' . $searchFilter . '
          ORDER BY i.id'
     );
@@ -408,6 +417,9 @@ function list_outgoing_images(
     }
     if ($month !== null) {
         $parameters['record_month'] = $month;
+    }
+    if ($day !== null) {
+        $parameters['record_day'] = $day;
     }
     if ($search !== '') {
         $parameters['record_search'] = $search;

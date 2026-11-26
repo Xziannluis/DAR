@@ -4,6 +4,7 @@ $firstYear = min($currentYear, (int) $outgoingEditingEntry['record_year']);
 $lastYear = max($currentYear + OUTGOING_YEAR_RANGE, (int) $outgoingEditingEntry['record_year']);
 $returnUrl = 'index.php?view=list&year=' . $outgoingRecordYear
     . ($outgoingRecordMonth === null ? '' : '&month=' . $outgoingRecordMonth)
+    . ($outgoingRecordDay === null ? '' : '&day=' . $outgoingRecordDay)
     . ($outgoingRecordBook === null ? '' : '&book=' . $outgoingRecordBook)
     . ($outgoingRecordSearch === '' ? '' : '&search=' . rawurlencode($outgoingRecordSearch));
 $deliveryLabels = [
@@ -37,6 +38,7 @@ $locationValue = isset($locationLabels[$storedLocationType]) && $storedLocationD
   <input type="hidden" name="record_id" value="<?= (int) $outgoingEditingEntry['id'] ?>" />
   <input type="hidden" name="return_year" value="<?= $outgoingRecordYear ?>" />
   <input type="hidden" name="return_month" value="<?= $outgoingRecordMonth ?? '' ?>" />
+  <input type="hidden" name="return_day" value="<?= $outgoingRecordDay ?? '' ?>" />
   <input type="hidden" name="return_search" value="<?= escape_html($outgoingRecordSearch) ?>" />
   <input type="hidden" name="return_book" value="<?= $outgoingRecordBook ?? '' ?>" />
   <div class="outgoing-fields">

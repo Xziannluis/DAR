@@ -37,10 +37,9 @@
                 <svg viewBox="0 0 20 20" fill="none"><rect x="3.5" y="5" width="13" height="11.5" rx="2" /><path d="M6.5 3.5v3M13.5 3.5v3M3.5 8.5h13" /></svg>
               </span>
               <span class="activity-copy">
-                <strong>Record <?= escape_html((string) $recentEntry['record_number']) ?></strong>
+                <strong>B<?= escape_html((string) $recentEntry['book_number']) ?> #<?= escape_html((string) $recentEntry['record_number']) ?></strong>
                 <time datetime="<?= escape_html((string) $recentEntry['date_sent']) ?>"><?= escape_html(date('M j, Y', strtotime((string) $recentEntry['date_sent']))) ?></time>
               </span>
-              <span class="activity-book">Book <?= escape_html((string) $recentEntry['book_number']) ?></span>
               <a class="activity-view-button" href="index.php?<?= escape_html(http_build_query([
                 'view' => 'list',
                 'year' => (int) $recentEntry['record_year'],

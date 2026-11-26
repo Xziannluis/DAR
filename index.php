@@ -13,6 +13,7 @@ session_set_cookie_params([
 session_start();
 require_once __DIR__ . '/web.php';
 require_once __DIR__ . '/actions/outgoing.php';
+require_once __DIR__ . '/actions/backup.php';
 
 $database = application_database();
 $account = current_account($database);
@@ -157,6 +158,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect_to();
     }
 
+    if ($action === 'import-outgoing-backup') {
+        if ($account === null || $account['role'] !== 'admin') {
+            flash_message('Only an administrator can import a backup file.');
+            redirect_to();
+        }
+        import_outgoing_backup($database);
+    }
+
     if ($action === 'sign-out') {
         unset($_SESSION['account_id']);
         session_regenerate_id(true);
@@ -168,9 +177,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     redirect_to();
 }
 
+if ($account !== null && $account['role'] === 'admin' && ($_GET['admin_export'] ?? '') === 'download') {
+    download_outgoing_backup($database);
+}
+
 $adminCount = $database->query("SELECT COUNT(*) FROM accounts WHERE role = 'admin'");
 $hasAdmin = $adminCount !== false && (int) $adminCount->fetchColumn() > 0;
 $showSetup = $account === null && !$hasAdmin && isset($_GET['setup']);
+$requestedAdminView = $_GET['admin_view'] ?? 'accounts';
+$adminView = $account !== null
+    && $account['role'] === 'admin'
+    && is_string($requestedAdminView)
+    && in_array($requestedAdminView, ['accounts', 'import', 'export'], true)
+        ? $requestedAdminView
+        : 'accounts';
 $requestedOutgoingView = $_GET['view'] ?? 'dashboard';
 $outgoingView = is_string($requestedOutgoingView)
     && in_array($requestedOutgoingView, ['dashboard', 'entry', 'list', 'logbook'], true)
@@ -191,6 +211,14 @@ $outgoingRecordMonth = $outgoingRecordYear !== null
     && $requestedRecordMonth >= 1
     && $requestedRecordMonth <= 12
         ? $requestedRecordMonth
+        : null;
+$requestedRecordDay = filter_var($_GET['day'] ?? null, FILTER_VALIDATE_INT);
+$outgoingRecordDay = $outgoingRecordYear !== null
+    && $requestedRecordDay !== false
+    && $requestedRecordDay !== null
+    && $requestedRecordDay >= 1
+    && $requestedRecordDay <= 31
+        ? $requestedRecordDay
         : null;
 $requestedRecordBook = filter_var($_GET['book'] ?? null, FILTER_VALIDATE_INT);
 $outgoingRecordBook = $requestedRecordYear !== null
@@ -238,7 +266,8 @@ $outgoingEntries = $account !== null
         $outgoingRecordYear,
         $outgoingRecordMonth,
         $outgoingRecordSearch,
-        $outgoingRecordBook
+        $outgoingRecordBook,
+        $outgoingRecordDay
     )
     : [];
 $outgoingImages = $account !== null
@@ -250,7 +279,8 @@ $outgoingImages = $account !== null
         (int) $account['id'],
         $outgoingRecordYear,
         $outgoingRecordMonth,
-        $outgoingRecordSearch
+        $outgoingRecordSearch,
+        $outgoingRecordDay
     )
     : [];
 $outgoingEditingEntry = $account !== null
@@ -273,7 +303,9 @@ $outgoingPageTitles = [
 ];
 $pageTitle = $account !== null && $account['role'] === 'outgoing'
     ? $outgoingPageTitles[$outgoingView] . ' | DAR-RMS'
-    : 'Sign in | DAR-RMS';
+    : ($account !== null && $account['role'] === 'admin'
+        ? ['accounts' => 'Manage Accounts', 'import' => 'Import Backup', 'export' => 'Export Backup'][$adminView] . ' | DAR-RMS'
+        : 'Sign in | DAR-RMS');
 ?>
 <!doctype html>
 <html lang="en">
@@ -291,7 +323,7 @@ $pageTitle = $account !== null && $account['role'] === 'outgoing'
   </head>
   <body class="<?= $account === null ? 'login-background' : 'dashboard-background' ?>">
     <main class="page-shell<?= $account !== null ? ' page-shell-dashboard' : '' ?>">
-      <section class="welcome-panel<?= $account !== null && $account['role'] === 'outgoing' ? ' workspace-sidebar' : '' ?>" aria-label="<?= $account !== null && $account['role'] === 'outgoing' ? 'Outgoing workspace navigation' : 'About DAR-RMS' ?>">
+      <section class="welcome-panel<?= $account !== null ? ' workspace-sidebar' : '' ?>" aria-label="<?= $account !== null && $account['role'] === 'admin' ? 'Administrator navigation' : ($account !== null ? 'Outgoing workspace navigation' : 'About DAR-RMS') ?>">
         <a class="brand brand-light" href="index.php" aria-label="DAR-RMS home">
           <img class="brand-logo" src="assets/dar-rms-logo.png" alt="" />
           <span class="brand-copy">
@@ -317,6 +349,21 @@ $pageTitle = $account !== null && $account['role'] === 'outgoing'
             <a href="index.php?view=logbook"<?= $outgoingView === 'logbook' ? ' aria-current="page"' : '' ?>>
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 4.5h12a2 2 0 0 1 2 2v13H8a2 2 0 0 1-2-2v-13Z" /><path d="M6 4.5v13a2 2 0 0 1-2 2M10 8h6m-6 4h6m-6 4h4" /></svg>
               <span>Logbook</span>
+            </a>
+          </nav>
+        <?php elseif ($account !== null && $account['role'] === 'admin'): ?>
+          <nav class="workspace-nav" aria-label="Administrator sections">
+            <a href="index.php?admin_view=accounts"<?= $adminView === 'accounts' ? ' aria-current="page"' : '' ?>>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M3.5 20v-1.2a5.5 5.5 0 0 1 11 0V20ZM16 5.5a3 3 0 0 1 0 5.8m1.2 3.3a4.5 4.5 0 0 1 3.3 4.3V20h-3" /></svg>
+              <span>Manage Account</span>
+            </a>
+            <a href="index.php?admin_view=import"<?= $adminView === 'import' ? ' aria-current="page"' : '' ?>>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" /></svg>
+              <span>Import</span>
+            </a>
+            <a href="index.php?admin_view=export"<?= $adminView === 'export' ? ' aria-current="page"' : '' ?>>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 9v12m0 0 4.5-4.5M12 21l-4.5-4.5M4 10V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5" /></svg>
+              <span>Export</span>
             </a>
           </nav>
         <?php else: ?>
