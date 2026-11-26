@@ -1268,7 +1268,7 @@ body.login-background .login-content .submit-button:hover {
   overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid #e8edeb;
-  border-radius: 9px;
+  border-radius: 11px;
   list-style: none;
 }
 
@@ -1277,9 +1277,13 @@ body.login-background .login-content .submit-button:hover {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 50px;
-  padding: 8px 3px;
+  min-height: 52px;
+  padding: 9px 12px;
   border-bottom: 1px solid #edf0ef;
+}
+
+.account-list li:last-child {
+  border-bottom: 0;
 }
 
 .account-identity {
@@ -1301,6 +1305,93 @@ body.login-background .login-content .submit-button:hover {
   flex: none;
   color: #94a09f;
   font-size: 10px;
+}
+
+.account-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.account-reset-trigger {
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid #dfe7e4;
+  border-radius: 6px;
+  background: #fff;
+  color: #397c64;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account-reset-trigger:hover {
+  border-color: #a9c5b8;
+  background: #f7faf8;
+}
+
+.account-reset-dialog {
+  width: min(420px, calc(100% - 32px));
+  padding: 0;
+  border: 1px solid #d8e4df;
+  border-radius: 12px;
+  background: #fbfcfb;
+  color: #34474d;
+  box-shadow: 0 24px 80px rgba(12, 31, 26, 0.3);
+}
+
+.account-reset-dialog::backdrop {
+  background: rgba(6, 18, 15, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.account-reset-dialog form {
+  display: grid;
+  gap: 10px;
+  padding: 22px;
+}
+
+.account-reset-dialog h2 {
+  margin: 0;
+  color: #263d42;
+  font-size: 18px;
+}
+
+.account-reset-dialog p {
+  margin: 0 0 4px;
+  color: #72817b;
+  font-size: 12px;
+}
+
+.account-reset-dialog label {
+  color: #52636a;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.account-reset-dialog input {
+  width: 100%;
+  height: 40px;
+  padding: 0 11px;
+  border: 1px solid #dfe7e4;
+  border-radius: 6px;
+  background: #fff;
+  color: #34474d;
+  font: inherit;
+  font-size: 12px;
+}
+
+.account-reset-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.account-reset-dialog-actions .submit-button {
+  min-height: 36px;
+  padding: 0 13px;
+  font-size: 11px;
 }
 
 .outgoing-entry-form {
@@ -2460,7 +2551,34 @@ html[data-theme="dark"] body.dashboard-background .page-shell-dashboard .logbook
 
 html[data-theme="dark"] .account-list {
   border-color: #354842;
-  border-radius: 9px;
+  border-radius: 11px;
+}
+
+html[data-theme="dark"] .account-reset-dialog {
+  border-color: #455a53;
+  background: #1b2a27;
+  color: #e2ebe7;
+}
+
+html[data-theme="dark"] .account-reset-dialog h2 {
+  color: #edf4f1;
+}
+
+html[data-theme="dark"] .account-reset-dialog p,
+html[data-theme="dark"] .account-reset-dialog label {
+  color: #b5c4be;
+}
+
+html[data-theme="dark"] .account-reset-dialog input {
+  border-color: #455a53;
+  background: #14211f;
+  color: #edf4f1;
+}
+
+html[data-theme="dark"] .account-reset-trigger {
+  border-color: #455a53;
+  background: #1b2a27;
+  color: #c5d4ce;
 }
 
 html[data-theme="dark"] .backup-includes,

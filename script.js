@@ -31,6 +31,22 @@ themeToggleButtons.forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-reset-dialog]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const dialog = document.getElementById(button.dataset.resetDialog);
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    dialog.showModal();
+    dialog.querySelector('input[name="new_password"]')?.focus();
+  });
+});
+
+document.querySelectorAll("[data-close-dialog]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const dialog = button.closest("dialog");
+    if (dialog instanceof HTMLDialogElement) dialog.close();
+  });
+});
+
 document.querySelectorAll("[data-password-toggle]").forEach((toggle) => {
   toggle.addEventListener("click", () => {
     const input = document.getElementById(toggle.dataset.passwordToggle);

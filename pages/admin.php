@@ -74,7 +74,25 @@ $adminPageDetails = [
             <strong><?= escape_html($listed['username']) ?></strong>
             <span class="role-badge role-<?= escape_html($role) ?>"><?= escape_html($roleLabel) ?></span>
           </div>
-          <time><?= $createdAt === false ? '—' : escape_html(date('M j, Y', $createdAt)) ?></time>
+          <div class="account-actions">
+            <time><?= $createdAt === false ? '—' : escape_html(date('M j, Y', $createdAt)) ?></time>
+            <button class="account-reset-trigger" type="button" data-reset-dialog="reset-password-dialog-<?= (int) $listed['id'] ?>">Reset password</button>
+          </div>
+          <dialog class="account-reset-dialog" id="reset-password-dialog-<?= (int) $listed['id'] ?>" aria-labelledby="reset-password-title-<?= (int) $listed['id'] ?>">
+            <form method="post">
+              <input type="hidden" name="csrf_token" value="<?= escape_html(csrf_token()) ?>" />
+              <input type="hidden" name="action" value="reset-user-password" />
+              <input type="hidden" name="account_id" value="<?= (int) $listed['id'] ?>" />
+              <h2 id="reset-password-title-<?= (int) $listed['id'] ?>">Reset password</h2>
+              <p>Set a new password for <strong><?= escape_html($listed['username']) ?></strong>.</p>
+              <label for="reset-password-<?= (int) $listed['id'] ?>">New password</label>
+              <input id="reset-password-<?= (int) $listed['id'] ?>" name="new_password" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="At least 8 characters" required />
+              <div class="account-reset-dialog-actions">
+                <button class="secondary-button" type="button" data-close-dialog>Cancel</button>
+                <button class="submit-button" type="submit"><span>Save password</span></button>
+              </div>
+            </form>
+          </dialog>
         </li>
       <?php endforeach; ?>
     </ul>

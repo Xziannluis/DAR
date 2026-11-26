@@ -158,6 +158,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect_to();
     }
 
+    if ($action === 'reset-user-password') {
+        if ($account === null || $account['role'] !== 'admin') {
+            flash_message('Sign in as an administrator to reset account passwords.');
+            redirect_to();
+        }
+
+        $targetAccountId = filter_var($_POST['account_id'] ?? null, FILTER_VALIDATE_INT);
+        $newPassword = $_POST['new_password'] ?? null;
+        if ($targetAccountId === false || $targetAccountId <= 0 || !valid_password($newPassword)) {
+            flash_message('Choose an account and enter a password between 8 and 128 characters.');
+            redirect_to('admin_view=accounts');
+        }
+
+        $statement = $database->prepare(
+            'UPDATE accounts SET password_hash = :password_hash WHERE id = :id'
+        );
+        $statement->execute([
+            'password_hash' => password_hash($newPassword, PASSWORD_DEFAULT),
+            'id' => $targetAccountId,
+        ]);
+        if ($statement->rowCount() < 1) {
+            flash_message('Account not found, or the password is already set to that value.');
+        } else {
+            flash_message('Password updated successfully.', 'success');
+        }
+        redirect_to('admin_view=accounts');
+    }
+
     if ($action === 'import-outgoing-backup') {
         if ($account === null || $account['role'] !== 'admin') {
             flash_message('Only an administrator can import a backup file.');
