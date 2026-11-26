@@ -31,6 +31,23 @@ themeToggleButtons.forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-logbook-filters]").forEach((form) => {
+  const searchInput = form.querySelector('input[name="search"]');
+  let searchTimer;
+
+  form.querySelectorAll("select").forEach((select) => {
+    select.addEventListener("change", () => {
+      window.clearTimeout(searchTimer);
+      form.requestSubmit();
+    });
+  });
+
+  searchInput?.addEventListener("input", () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => form.requestSubmit(), 350);
+  });
+});
+
 document.querySelectorAll("[data-reset-dialog]").forEach((button) => {
   button.addEventListener("click", () => {
     const dialog = document.getElementById(button.dataset.resetDialog);

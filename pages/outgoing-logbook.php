@@ -33,7 +33,7 @@ $monthNames = [
         <a class="year-list-back" href="index.php?view=list&amp;year=<?= escape_html($outgoingRecordYear) ?>">Manage records</a>
       </div>
     </div>
-    <form class="month-filter" method="get">
+    <form class="month-filter" method="get" data-logbook-filters>
       <input type="hidden" name="view" value="logbook" />
       <input type="hidden" name="year" value="<?= escape_html($outgoingRecordYear) ?>" />
       <div class="record-filter-field">
@@ -67,7 +67,6 @@ $monthNames = [
         <label for="logbook-search">Search records by keyword</label>
         <input class="record-search-input" id="logbook-search" name="search" type="search" maxlength="100" value="<?= escape_html($outgoingRecordSearch) ?>" placeholder="Name, subject, document type, service..." />
       </div>
-      <button class="secondary-button" type="submit">Apply filters</button>
       <?php if ($outgoingRecordBook !== null || $outgoingRecordMonth !== null || $outgoingRecordDay !== null || $outgoingRecordSearch !== ''): ?>
         <a class="year-list-back" href="index.php?view=logbook&amp;year=<?= escape_html($outgoingRecordYear) ?>">Clear filters</a>
       <?php endif; ?>
