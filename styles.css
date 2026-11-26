@@ -2495,8 +2495,8 @@ html[data-theme="dark"] body .record-action-delete {
 
 @media print {
   @page {
-    size: landscape;
-    margin: 12mm;
+    size: A4 landscape;
+    margin: 10mm;
   }
 
   html[data-theme="dark"] body,
@@ -2560,6 +2560,7 @@ html[data-theme="dark"] body .record-action-delete {
     min-height: 0 !important;
     border: 0 !important;
     box-shadow: none !important;
+    background: #fff !important;
   }
 
   .page-shell-dashboard:has(.logbook-section) .workspace-sidebar,
@@ -2583,6 +2584,10 @@ html[data-theme="dark"] body .record-action-delete {
   .logbook-table-scroll {
     overflow: visible !important;
     border: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
   }
 
   .logbook-table {
@@ -2597,7 +2602,12 @@ html[data-theme="dark"] body .record-action-delete {
   .logbook-table th,
   .logbook-table td {
     padding: 5px !important;
-    color: #111 !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+  }
+
+  .logbook-table td * {
+    color: #000 !important;
   }
 
   .logbook-table caption {
